@@ -11,7 +11,7 @@ variable "prefix" {
 variable "aws_region" {
   description = "Região AWS da plataforma."
   type        = string
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "noncurrent_version_retention_days" {

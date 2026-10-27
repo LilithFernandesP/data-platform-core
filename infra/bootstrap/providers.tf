@@ -7,6 +7,11 @@ terraform {
       version = "~> 6.0"
     }
   }
+  backend "s3" {
+    key          = "data-platform-core/bootstrap/terraform.tfstate"
+    use_lockfile = true
+    encrypt      = true
+  }
 }
 
 provider "aws" {
