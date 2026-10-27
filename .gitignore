@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Spark / Iceberg local (testes)
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.tfvars
+backend.hcl
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
