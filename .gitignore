@@ -30,3 +30,6 @@ backend.hcl
 .idea/
 .DS_Store
 Thumbs.db
+
+
+project.md
