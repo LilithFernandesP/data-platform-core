@@ -18,13 +18,13 @@ def valid_contract():
                 "id",
                 StringType(),
                 True,
-                metadata={"description": "Unique identifier", "pii": False},
+                metadata={"comment": "Unique identifier"},
             ),
             StructField(
                 "name",
                 StringType(),
                 True,
-                metadata={"description": "Name of the entity", "pii": False},
+                metadata={"comment": "Name of the entity"},
             ),
         ]
     )
@@ -84,20 +84,18 @@ def test_not_snake_case_columns(valid_contract):
     """
     schema = StructType(
         [
-            StructField(
-                "id", StringType(), True, metadata={"description": "Id", "pii": False}
-            ),
+            StructField("id", StringType(), True, metadata={"comment": "Id"}),
             StructField(
                 "TituloOriginal",
                 StringType(),
                 True,
-                metadata={"description": "Original title", "pii": False},
+                metadata={"comment": "Original title"},
             ),
             StructField(
                 "data-lancamento",
                 StringType(),
                 True,
-                metadata={"description": "Release date", "pii": False},
+                metadata={"comment": "Release date"},
             ),
         ]
     )
@@ -111,40 +109,18 @@ def test_not_snake_case_columns(valid_contract):
     assert "'id'" not in message
 
 
-def test_missing_metadata_description(valid_contract):
+def test_missing_metadata_comment(valid_contract):
     """
-    Test that missing metadata description raises a ValueError.
-    """
-    schema = StructType(
-        [
-            StructField("id", StringType(), True, metadata={"pii": False}),
-            StructField("name", StringType(), True, metadata={"pii": False}),
-        ]
-    )
-
-    with pytest.raises(ValueError, match="columns missing description: id, name"):
-        replace(valid_contract, schema=schema)
-
-
-def test_missing_metadata_pii(valid_contract):
-    """
-    Test that missing metadata pii raises a ValueError.
+    Test that a column without comment raises a ValueError.
     """
     schema = StructType(
         [
-            StructField(
-                "id", StringType(), True, metadata={"description": "Unique identifier"}
-            ),
-            StructField(
-                "name",
-                StringType(),
-                True,
-                metadata={"description": "Unique identifier"},
-            ),
+            StructField("id", StringType(), True, metadata={}),
+            StructField("name", StringType(), True, metadata={}),
         ]
     )
 
-    with pytest.raises(ValueError, match="columns missing pii: id, name"):
+    with pytest.raises(ValueError, match="columns missing comment: id, name"):
         replace(valid_contract, schema=schema)
 
 
@@ -153,26 +129,6 @@ def test_invalid_partition_by(valid_contract):
 
     with pytest.raises(ValueError, match="Partition field test is invalid."):
         replace(valid_contract, partition_by=partition_by)
-
-
-@pytest.mark.parametrize("pii", ["false", "False", 0, None])
-def test_pii_not_bool(valid_contract, pii):
-    """
-    Test that a pii flag that is not a real bool raises a ValueError.
-    """
-    schema = StructType(
-        [
-            StructField(
-                "id",
-                StringType(),
-                True,
-                metadata={"description": "Unique identifier", "pii": pii},
-            ),
-        ]
-    )
-
-    with pytest.raises(ValueError, match="columns missing pii: id"):
-        replace(valid_contract, schema=schema)
 
 
 @pytest.mark.parametrize(

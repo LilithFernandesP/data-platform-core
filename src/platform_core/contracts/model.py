@@ -44,21 +44,11 @@ class TableContract:
         if not_snake_case_columns:
             raise ValueError(f"{not_snake_case_columns} needs to be snake_case.")
 
-        missing_description = [
-            f.name for f in self.schema.fields if not f.metadata.get("description")
+        missing_comment = [
+            f.name for f in self.schema.fields if not f.metadata.get("comment")
         ]
-        if missing_description:
-            raise ValueError(
-                f"columns missing description: {', '.join(missing_description)}"
-            )
-
-        missing_pii = [
-            f.name
-            for f in self.schema.fields
-            if not isinstance(f.metadata.get("pii"), bool)
-        ]
-        if missing_pii:
-            raise ValueError(f"columns missing pii: {', '.join(missing_pii)}")
+        if missing_comment:
+            raise ValueError(f"columns missing comment: {', '.join(missing_comment)}")
 
         if not set(self.partition_by).issubset(self.schema.fieldNames()):
             raise ValueError(

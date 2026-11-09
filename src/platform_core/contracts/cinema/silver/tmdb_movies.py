@@ -13,12 +13,12 @@ from pyspark.sql.types import (
 from platform_core.contracts.model import TableContract
 
 
-def _col(name, dtype, nullable, description, pii=False, **extra):
+def _col(name, dtype, nullable, comment, **extra):
     return StructField(
         name=name,
         dataType=dtype,
         nullable=nullable,
-        metadata={"description": description, "pii": pii, **extra},
+        metadata={"comment": comment, **extra},
     )
 
 
