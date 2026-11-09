@@ -176,7 +176,9 @@ def test_pii_not_bool(valid_contract, pii):
 
 
 @pytest.mark.parametrize(
-    "version", ["1", "1.0", 1.0, True], ids=["str_1", "str_1.0", "float_1.0", "bool_true"]
+    "version",
+    ["1", "1.0", 1.0, True],
+    ids=["str_1", "str_1.0", "float_1.0", "bool_true"],
 )
 def test_not_int_version(valid_contract, version):
     """
