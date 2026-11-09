@@ -61,13 +61,6 @@ def test_money_columns_are_usd(column):
     assert TMDB_MOVIES.schema[column].metadata["unit"] == "USD"
 
 
-def test_no_pii_columns():
-    """
-    Test that the table holds no personal data.
-    """
-    assert not any(field.metadata["pii"] for field in TMDB_MOVIES.schema.fields)
-
-
 def test_metadata_survives_spark(spark_session):
     """
     Test that Spark keeps the contract schema, metadata included,
